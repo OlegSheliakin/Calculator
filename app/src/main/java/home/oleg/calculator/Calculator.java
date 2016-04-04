@@ -1,5 +1,8 @@
 package home.oleg.calculator;
 
+import android.app.Activity;
+import android.app.Notification;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.LinkedList;
@@ -67,7 +70,7 @@ public class Calculator {
                 break;
             case MathsOperations.DIVIDE:
                 if (firstOperand.compareTo(BigDecimal.ZERO) == 0) {
-                    throw new IllegalArgumentException("Can't divide by zero");// почему?
+                    throw new IllegalArgumentException();
                 } else {
                     operands.add(secondOperand.divide(firstOperand, MathContext.DECIMAL64).doubleValue());
                 }

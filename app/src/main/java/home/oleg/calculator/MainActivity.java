@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     setExpression(Double.toString(result));
                 } catch (Exception e) {
                     //sets 'Error' in the expression, if it throws any exception
-                    setExpression(e.getMessage());
+                    setExpression(getResources().getString(R.string.error));
                 }
                 break;
             case R.id.btnOne:
