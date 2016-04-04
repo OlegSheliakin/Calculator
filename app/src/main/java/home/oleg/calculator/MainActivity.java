@@ -11,10 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-
 
     private EditText inputExp;
 
@@ -89,29 +86,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()) {
             case R.id.btnAdd:
-                setOperation(expression, CalcModel.ADD);
+                setOperation(expression, MathsOperations.ADD);
                 break;
             case R.id.btnSubtract:
-                setOperation(expression, CalcModel.SUBTRACT);
+                setOperation(expression, MathsOperations.SUBTRACT);
                 break;
             case R.id.btnMultply:
                 if (!expression.isEmpty()) {//doesn't allow to set the symbol if the expression is empty
-                    setOperation(expression, CalcModel.MULTIPLY);
+                    setOperation(expression, MathsOperations.MULTIPLY);
                 }
                 break;
             case R.id.btnDivide:
                 if (!expression.isEmpty()) {//doesn't allow to set the symbol if the expression is empty
-                    setOperation(expression, CalcModel.DIVIDE);
+                    setOperation(expression, MathsOperations.DIVIDE);
                 }
                 break;
             case R.id.btnEq:
                 try {
                     expression = formExpression(expression);//forms expression before evaluating
-                    result = CalcModel.evaluate(expression);//gets result
+                    result = Calculator.calculate(expression);//gets result
                     setExpression(Double.toString(result));
                 } catch (Exception e) {
                     //sets 'Error' in the expression, if it throws any exception
-                    setExpression(getResources().getString(R.string.error));
+                    setExpression(e.getMessage());
                 }
                 break;
             case R.id.btnOne:
@@ -177,9 +174,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         char lastSymbol = expression.charAt(expression.length() - 1);
 
-        if ((lastSymbol == CalcModel.MULTIPLY || lastSymbol == CalcModel.DIVIDE) && operation == CalcModel.SUBTRACT) {
+        if ((lastSymbol == MathsOperations.MULTIPLY || lastSymbol == MathsOperations.DIVIDE) && operation == MathsOperations.SUBTRACT) {
             inputExp.append(String.valueOf(operation));
-        } else if (!CalcModel.isOperator(lastSymbol)) {
+        } else if (!MathsOperations.isOperator(lastSymbol)) {
             inputExp.append(String.valueOf(operation));
         }
     }
@@ -195,21 +192,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         int i = expression.length() - 1;
-        while (!CalcModel.isOperator(expression.charAt(i))) {
+        while (!MathsOperations.isOperator(expression.charAt(i))) {
             if (i == 0) {
                 break;
             }
             i--;
         }
         String str = expression.substring(i, expression.length());
-        if (!str.contains(String.valueOf(CalcModel.POINT))) {
-            inputExp.append(String.valueOf(CalcModel.POINT));
+        if (!str.contains(String.valueOf(Calculator.POINT))) {
+            inputExp.append(String.valueOf(Calculator.POINT));
         }
     }
 
     private String formExpression(String expression) {
         int i = expression.length() - 1;
-        while (CalcModel.isOperator(expression.charAt(i))) {
+        while (MathsOperations.isOperator(expression.charAt(i))) {
             if (i == 0) {
                 break;
             }
