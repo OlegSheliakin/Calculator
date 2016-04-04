@@ -199,8 +199,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i--;
         }
         String str = expression.substring(i, expression.length());
-        if (!str.contains(String.valueOf(Calculator.POINT))) {
-            inputExp.append(String.valueOf(Calculator.POINT));
+        if (!str.contains(String.valueOf(Symbols.POINT))) {
+            inputExp.append(String.valueOf(Symbols.POINT));
         }
     }
 

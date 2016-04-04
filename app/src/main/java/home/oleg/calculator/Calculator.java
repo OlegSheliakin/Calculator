@@ -9,8 +9,6 @@ import java.util.LinkedList;
  */
 public class Calculator {
 
-    public static final char POINT = '.';
-
     private Calculator(){}
 
     //evaluates the expression
@@ -22,7 +20,7 @@ public class Calculator {
             char c = expression.charAt(i);
 
             if (MathsOperations.isOperator(c)) {
-                while (!operations.isEmpty() && !MathsOperations.isOperator(expression.charAt(i - 1)) && (expression.charAt(i) != POINT) &&
+                while (!operations.isEmpty() && !MathsOperations.isOperator(expression.charAt(i - 1)) && (expression.charAt(i) != Symbols.POINT) &&
                         (MathsOperations.priority(operations.getLast()) >= MathsOperations.priority(c))) {
 
                     evaluate(operands, operations.removeLast());
@@ -32,7 +30,7 @@ public class Calculator {
             } else {
                 String op = "";
                 while (i < expression.length() &&
-                        (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == POINT)) {
+                        (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == Symbols.POINT)) {
                     op = op + expression.charAt(i++);
                 }
                 i--;
@@ -51,7 +49,7 @@ public class Calculator {
         while (!operations.isEmpty()) {
             evaluate(operands, operations.removeLast());
         }
-
+        
         return operands.getFirst();
     }
     //counts the value of two operands
