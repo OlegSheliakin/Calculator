@@ -20,7 +20,7 @@ public class Calculator {
             char c = expression.charAt(i);
 
             if (MathsOperations.isOperator(c)) {
-                while (!operations.isEmpty() && !MathsOperations.isOperator(expression.charAt(i - 1)) && (expression.charAt(i) != Symbols.POINT) &&
+                while (!operations.isEmpty() && !MathsOperations.isOperator(expression.charAt(i - 1)) && (expression.charAt(i) != '.') &&
                         (MathsOperations.priority(operations.getLast()) >= MathsOperations.priority(c))) {
 
                     evaluate(operands, operations.removeLast());
@@ -30,7 +30,7 @@ public class Calculator {
             } else {
                 String op = "";
                 while (i < expression.length() &&
-                        (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == Symbols.POINT)) {
+                        (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == '.')) {
                     op = op + expression.charAt(i++);
                 }
                 i--;
@@ -49,7 +49,7 @@ public class Calculator {
         while (!operations.isEmpty()) {
             evaluate(operands, operations.removeLast());
         }
-        
+
         return operands.getFirst();
     }
     //counts the value of two operands
@@ -67,7 +67,7 @@ public class Calculator {
                 break;
             case MathsOperations.DIVIDE:
                 if (firstOperand.compareTo(BigDecimal.ZERO) == 0) {
-                    throw new IllegalArgumentException("Cannot divide by zero");// почему?
+                    throw new IllegalArgumentException("Can't divide by zero");// почему?
                 } else {
                     operands.add(secondOperand.divide(firstOperand, MathContext.DECIMAL64).doubleValue());
                 }
