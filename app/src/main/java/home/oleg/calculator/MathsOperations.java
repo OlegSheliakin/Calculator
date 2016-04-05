@@ -1,5 +1,8 @@
 package home.oleg.calculator;
 
+import home.oleg.calculator.Impl.Substraction;
+import home.oleg.calculator.Interfaces.IOperation;
+
 /**
  * Created by Oleg on 04.04.2016.
  */
@@ -16,15 +19,14 @@ public class MathsOperations {
 
     private MathsOperations(){}
 
-    //returns priority of operation
-    public static int priority(char operation) {
-        if (operation == ADD || operation == SUBTRACT) {
-            return LOW_PRIORITY;
+    public static IOperation addOperator (char operation){
+        switch (operation){
+            case SUBTRACT:
+                return new Substraction();
+            default:
+                return null;
+
         }
-        if (operation == DIVIDE || operation == MULTIPLY) {
-            return HIGH_PRIORITY;
-        }
-        else return -1;
     }
 
     public static boolean isOperator(char operation) {

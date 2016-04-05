@@ -1,35 +1,50 @@
 package home.oleg.calculator;
 
-import android.app.Activity;
-import android.app.Notification;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
+import home.oleg.calculator.Impl.Addition;
+import home.oleg.calculator.Impl.Division;
+import home.oleg.calculator.Impl.Multiplication;
+import home.oleg.calculator.Impl.Substraction;
+import home.oleg.calculator.Interfaces.IOperation;
 
 /**
  * Created by Oleg on 11.02.2016.
  */
 public class Calculator {
 
-    private Calculator(){}
+    private Stack<Double> operandsStack;
+    private Stack<IOperation> operationsStack;
+    private Map<Character, IOperation> operationsMap;
+
+    public Calculator(){
+        operationsMap = new HashMap<>();
+        operationsMap.put('+', new Addition());
+        operationsMap.put('-', new Substraction());
+        operationsMap.put('*', new Multiplication());
+        operationsMap.put('/', new Division());
+    }
 
     //evaluates the expression
-    public static double calculate(String expression) throws Exception {
-        LinkedList<Double> operands = new LinkedList<>();
-        LinkedList<Character> operations = new LinkedList<>();
+    public double calculate(String expression) throws Exception {
+        operandsStack = new Stack<>();
+        operationsStack = new Stack<>();
 
         for (int i = 0; i < expression.length(); i++) {
             char c = expression.charAt(i);
 
             if (MathsOperations.isOperator(c)) {
-                while (!operations.isEmpty() && !MathsOperations.isOperator(expression.charAt(i - 1)) && (expression.charAt(i) != '.') &&
-                        (MathsOperations.priority(operations.getLast()) >= MathsOperations.priority(c))) {
+                while (!operationsStack.isEmpty() && !MathsOperations.isOperator(expression.charAt(i - 1)) && (expression.charAt(i) != '.') &&
+                        (operationsStack.peek().getPriority() >= operationsMap.get(c).getPriority())) {
 
-                    evaluate(operands, operations.removeLast());
+                   // evaluate(operands, operations.pop());
+                    operandsStack.add(operationsStack.pop().evaluate(operandsStack));
                 }
 
-                operations.add(c);
+                operationsStack.add(operationsMap.get(c));
             } else {
                 String op = "";
                 while (i < expression.length() &&
@@ -37,48 +52,24 @@ public class Calculator {
                     op = op + expression.charAt(i++);
                 }
                 i--;
-                operands.add(Double.parseDouble(op));
+                operandsStack.add(Double.parseDouble(op));
             }
             // adds '-1.0' to expression instead of '-'
-            if (operations.size() > operands.size() && !operations.isEmpty()) {
-                char op = operations.removeLast();
+            if (operationsStack.size() > operandsStack.size() && !operationsStack.isEmpty()) {
+                char op = operationsStack.pop().getName();
                 if (op == MathsOperations.SUBTRACT) {
-                    operands.add(-1.0);
-                    operations.add(MathsOperations.MULTIPLY);
+                    operandsStack.add(-1.0);
+                    operationsStack.add(new Multiplication());
                 }
             }
         }
         //sequentially counts each operand
-        while (!operations.isEmpty()) {
-            evaluate(operands, operations.removeLast());
+        while (!operationsStack.isEmpty()) {
+            operandsStack.add(operationsStack.pop().evaluate(operandsStack));
         }
 
-        return operands.getFirst();
+        return operandsStack.firstElement();
     }
-    //counts the value of two operands
-    private static void evaluate(LinkedList<Double> operands, char operation) throws Exception {
 
-        BigDecimal firstOperand = new BigDecimal(operands.removeLast());
-        BigDecimal secondOperand = new BigDecimal(operands.removeLast());
 
-        switch (operation) {
-            case MathsOperations.ADD:
-                operands.add(secondOperand.add(firstOperand).doubleValue());
-                break;
-            case MathsOperations.SUBTRACT:
-                operands.add(secondOperand.subtract(firstOperand).doubleValue());
-                break;
-            case MathsOperations.DIVIDE:
-                if (firstOperand.compareTo(BigDecimal.ZERO) == 0) {
-                    throw new IllegalArgumentException();
-                } else {
-                    operands.add(secondOperand.divide(firstOperand, MathContext.DECIMAL64).doubleValue());
-                }
-                break;
-            case MathsOperations.MULTIPLY:
-                operands.add(secondOperand.multiply(firstOperand, MathContext.DECIMAL64).doubleValue());
-                break;
-
-        }
-    }
 }

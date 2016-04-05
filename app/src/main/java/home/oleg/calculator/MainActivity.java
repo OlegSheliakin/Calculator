@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnEq:
                 try {
                     expression = formExpression(expression);//forms expression before evaluating
-                    result = Calculator.calculate(expression);//gets result
+                    result = new Calculator().calculate(expression);//gets result
                     setExpression(Double.toString(result));
                 } catch (Exception e) {
                     //sets 'Error' in the expression, if it throws any exception

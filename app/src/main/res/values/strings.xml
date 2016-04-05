@@ -15,7 +15,7 @@
     <string name="eight">8</string>
     <string name="nine">9</string>
 
-    <string name="error">Can't divide by zero</string>
+    <string name="error">Cannot divide by zero</string>
     <string name="reset">RESET</string>
     <string name="clear">C</string>
     <string name="add">+</string>
