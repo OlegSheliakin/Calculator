@@ -13,21 +13,7 @@ public class MathsOperations {
     public static final char DIVIDE = '/';
     public static final char MULTIPLY = '*';
 
-    private static final int LOW_PRIORITY = 1;
-    private static final int HIGH_PRIORITY = 2;
-
-
     private MathsOperations(){}
-
-    public static IOperation addOperator (char operation){
-        switch (operation){
-            case SUBTRACT:
-                return new Substraction();
-            default:
-                return null;
-
-        }
-    }
 
     public static boolean isOperator(char operation) {
         return operation == ADD
