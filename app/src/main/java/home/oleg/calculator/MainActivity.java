@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             b.setOnClickListener(this);
         }
 
-        setExpression(getResources().getString(R.string.zero));
+        setExpression(getString(R.string.zero));
     }
 
     @Override
