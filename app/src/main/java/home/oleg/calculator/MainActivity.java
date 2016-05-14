@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String expression = inputExp.getText().toString();
 
-        if (expression.equals(getResources().getString(R.string.error))) {
+        if (expression.equals(getString(R.string.error))) {
             inputExp.setText(R.string.empty);
         }
 
@@ -108,38 +108,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     setExpression(Double.toString(result));
                 } catch (Exception e) {
                     //sets 'Error' in the expression, if it throws any exception
-                    setExpression(getResources().getString(R.string.error));
+                    setExpression(getString(R.string.error));
                 }
                 break;
             case R.id.btnOne:
-                inputExp.append(getResources().getString(R.string.one));
+                inputExp.append(getString(R.string.one));
                 break;
             case R.id.btnTwo:
-                inputExp.append(getResources().getString(R.string.two));
+                inputExp.append(getString(R.string.two));
                 break;
             case R.id.btnThree:
-                inputExp.append(getResources().getString(R.string.three));
+                inputExp.append(getString(R.string.three));
                 break;
             case R.id.btnFour:
-                inputExp.append(getResources().getString(R.string.four));
+                inputExp.append(getString(R.string.four));
                 break;
             case R.id.btnFive:
-                inputExp.append(getResources().getString(R.string.five));
+                inputExp.append(getString(R.string.five));
                 break;
             case R.id.btnSix:
-                inputExp.append(getResources().getString(R.string.six));
+                inputExp.append(getString(R.string.six));
                 break;
             case R.id.btnSeven:
-                inputExp.append(getResources().getString(R.string.seven));
+                inputExp.append(getString(R.string.seven));
                 break;
             case R.id.btnEight:
-                inputExp.append(getResources().getString(R.string.eight));
+                inputExp.append(getString(R.string.eight));
                 break;
             case R.id.btnNine:
-                inputExp.append(getResources().getString(R.string.nine));
+                inputExp.append(getString(R.string.nine));
                 break;
             case R.id.btnZero:
-                inputExp.append(getResources().getString(R.string.zero));
+                inputExp.append(getString(R.string.zero));
                 break;
             case R.id.btnReset:
                 inputExp.setText("");

@@ -39,8 +39,6 @@ public class Calculator {
             if (MathsOperations.isOperator(c)) {
                 while (!operationsStack.isEmpty() && !MathsOperations.isOperator(expression.charAt(i - 1)) && (expression.charAt(i) != '.') &&
                         (operationsStack.peek().getPriority() >= operationsMap.get(c).getPriority())) {
-
-                   // evaluate(operands, operations.pop());
                     operandsStack.add(operationsStack.pop().evaluate(operandsStack));
                 }
 
@@ -71,5 +69,15 @@ public class Calculator {
         return operandsStack.firstElement();
     }
 
+    private String formExpression(String expression) {
+        int i = expression.length() - 1;
+        while (MathsOperations.isOperator(expression.charAt(i))) {
+            if (i == 0) {
+                break;
+            }
+            i--;
+        }
+        return expression.substring(0, i + 1);
+    }
 
 }
