@@ -11,8 +11,7 @@
         <activity
             android:name="home.oleg.calculator.MainActivity"
             android:windowSoftInputMode="stateHidden"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
